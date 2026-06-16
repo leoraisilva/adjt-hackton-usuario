@@ -1,4 +1,4 @@
-package br.com.hackaton.usuario.infra.outbound.persistent.entity;
+package br.com.hackaton.usuario.infra.addapter.outbound.persistent.entity;
 
 import jakarta.persistence.*;
 

@@ -1,8 +1,8 @@
-package br.com.hackaton.usuario.infra.inbound.mapper;
+package br.com.hackaton.usuario.infra.addapter.inbound.mapper;
 
 import br.com.hackaton.usuario.application.domain.Address;
 import br.com.hackaton.usuario.application.domain.AddressFactory;
-import br.com.hackaton.usuario.infra.outbound.persistent.entity.AddressEntity;
+import br.com.hackaton.usuario.infra.addapter.outbound.persistent.entity.AddressEntity;
 
 public class AddressMapper implements IAddressMapper {
     private final AddressFactory factory;

@@ -22,6 +22,7 @@ public class UsuarioService implements UsuarioPort {
 
     @Override
     public CreateUsuarioOutput createUsuario(CreateUsuarioInput input) {
+        if (searchAddress(input.address().getCep()).getCep() == null) repository.createAddress(input.address());
         return CreateUsuarioOutput.from(repository.createUsuario(CreateUsuarioInput.to(input)), input.address());
     }
 
@@ -41,11 +42,14 @@ public class UsuarioService implements UsuarioPort {
     @Override
     public SearchUsuarioOutput searchUsuario(String cpf) {
         var usuario = repository.searchUsuario(cpf);
-        return SearchUsuarioOutput.from(usuario, repository.searchAddress(usuario.getCep()));
+        var address = repository.searchAddress(usuario.getCep());
+        return SearchUsuarioOutput.from(usuario, address);
     }
 
     @Override
     public UpdateUsuarioOutput updateUsuario(UpdateUsuarioInput input) {
+        if (searchAddress(input.address().getCep()).getCep() == null) repository.createAddress(input.address());
+        else repository.updateAddress(input.address());
         return UpdateUsuarioOutput.from(repository.updateUsuario(UpdateUsuarioInput.to(input)), input.address());
     }
 
