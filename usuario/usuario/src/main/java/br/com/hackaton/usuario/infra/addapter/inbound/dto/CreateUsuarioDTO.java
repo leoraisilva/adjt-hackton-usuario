@@ -6,7 +6,7 @@ import br.com.hackaton.usuario.application.usecase.inbound.create.CreateUsuarioI
 
 import java.util.Objects;
 
-public record CreateUsuarioDTO(String nome, String cpf, Status status, CreateAddressDTO addressDTO, String tell, String email) {
+public record CreateUsuarioDTO(String nome, String cpf, Status status, CreateAddressDTO endereco, String tell, String email) {
 
     public CreateUsuarioDTO {
         Objects.requireNonNull(nome, "Campo nome é obrigatorio!!");
@@ -50,14 +50,14 @@ public record CreateUsuarioDTO(String nome, String cpf, Status status, CreateAdd
                 createDTO.cpf(),
                 createDTO.status(),
                 new Address.AddressBuilder()
-                        .withCEP(createDTO.addressDTO().cep())
-                        .withBairro(createDTO.addressDTO().bairro())
-                        .withComplemento(createDTO.addressDTO().complemento())
-                        .withEstado(createDTO.addressDTO().estado())
-                        .withLocalidade(createDTO.addressDTO().localidade())
-                        .withLogradouro(createDTO.addressDTO().logradouro())
-                        .withIBGE(createDTO.addressDTO().ibge())
-                        .withUF(createDTO.addressDTO().uf())
+                        .withCEP(createDTO.endereco().cep())
+                        .withBairro(createDTO.endereco().bairro())
+                        .withComplemento(createDTO.endereco().complemento())
+                        .withEstado(createDTO.endereco().estado())
+                        .withLocalidade(createDTO.endereco().localidade())
+                        .withLogradouro(createDTO.endereco().logradouro())
+                        .withCodigoMunicipal(createDTO.endereco().codigoMunicipal())
+                        .withUF(createDTO.endereco().uf())
                         .build(),
                 createDTO.tell,
                 createDTO.email

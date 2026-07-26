@@ -8,10 +8,11 @@ public class AddressEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String idAddress;
-    @Column(name = "codigo_municipal")
-    private String ibge;
     @Column(name = "cep", nullable = false)
     private String cep;
+    @Column(name = "codigo_municipal")
+    private String codigoMunicipal;
+
     @Column(name = "logradouro", nullable = false)
     private String logradouro;
     @Column(name = "complemento")
@@ -25,9 +26,9 @@ public class AddressEntity {
     @Column(name = "uf")
     private String uf;
 
-    public AddressEntity(String ibge, String cep, String logradouro, String complemento, String bairro, String localidade, String estado, String uf) {
-        this.ibge = ibge;
+    public AddressEntity(String cep, String codigoMunicipal, String logradouro, String complemento, String bairro, String localidade, String estado, String uf) {
         this.cep = cep;
+        this.codigoMunicipal = codigoMunicipal;
         this.logradouro = logradouro;
         this.complemento = complemento;
         this.bairro = bairro;
@@ -46,12 +47,12 @@ public class AddressEntity {
         this.idAddress = idAddress;
     }
 
-    public String getIbge() {
-        return ibge;
+    public String getCodigoMunicipal() {
+        return codigoMunicipal;
     }
 
-    public void setIbge(String ibge) {
-        this.ibge = ibge;
+    public void setCodigoMunicipal(String codigoMunicipal) {
+        this.codigoMunicipal = codigoMunicipal;
     }
 
     public String getCep() {

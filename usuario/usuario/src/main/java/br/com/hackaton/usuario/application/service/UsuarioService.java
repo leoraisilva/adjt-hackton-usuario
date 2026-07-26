@@ -22,38 +22,28 @@ public class UsuarioService implements UsuarioPort {
 
     @Override
     public CreateUsuarioOutput createUsuario(CreateUsuarioInput input) {
-        if (searchAddress(input.address().getCep()).getCep() == null) repository.createAddress(input.address());
-        return CreateUsuarioOutput.from(repository.createUsuario(CreateUsuarioInput.to(input)), input.address());
+        return CreateUsuarioOutput.from(repository.createUsuario(CreateUsuarioInput.to(input)));
     }
 
     @Override
     public DeleteUsuarioOutput deleteUsuario(String cpf) {
-        var usuario = repository.deleteUsuario(cpf);
-        return DeleteUsuarioOutput.from(usuario, repository.searchAddress(usuario.getCep()));
+        return DeleteUsuarioOutput.from(repository.deleteUsuario(cpf));
     }
 
     @Override
     public List<ListUsuarioOutput> listUsuario() {
         return repository.listUsuario().stream()
-                .map(c -> ListUsuarioOutput.from(c, searchAddress(c.getCep())))
+                .map(ListUsuarioOutput::from)
                 .toList();
     }
 
     @Override
     public SearchUsuarioOutput searchUsuario(String cpf) {
-        var usuario = repository.searchUsuario(cpf);
-        var address = repository.searchAddress(usuario.getCep());
-        return SearchUsuarioOutput.from(usuario, address);
+        return SearchUsuarioOutput.from(repository.searchUsuario(cpf));
     }
 
     @Override
     public UpdateUsuarioOutput updateUsuario(UpdateUsuarioInput input) {
-        if (searchAddress(input.address().getCep()).getCep() == null) repository.createAddress(input.address());
-        else repository.updateAddress(input.address());
-        return UpdateUsuarioOutput.from(repository.updateUsuario(UpdateUsuarioInput.to(input)), input.address());
-    }
-
-    private Address searchAddress (String cep) {
-        return repository.searchAddress(cep);
+        return UpdateUsuarioOutput.from(repository.updateUsuario(UpdateUsuarioInput.to(input)));
     }
 }

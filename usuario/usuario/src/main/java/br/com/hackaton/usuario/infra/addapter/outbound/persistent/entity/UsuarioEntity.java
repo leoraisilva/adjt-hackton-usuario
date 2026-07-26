@@ -14,20 +14,21 @@ public class UsuarioEntity {
     @Column(name = "cpf", nullable = false, unique = true)
     private String cpf;
     @Column(name = "status", nullable = false)
-    private Status status;
-    @Column(name = "cep")
-    private String cep;
+    private String status;
+    @ManyToOne(targetEntity = AddressEntity.class)
+    @JoinColumn(name = "cep")
+    private AddressEntity endereco;
     @Column(name = "tell", nullable = false)
     private String tell;
     @Column(name = "email", nullable = false)
     private String email;
 
-    public UsuarioEntity(String idUsuario, String nome, String cpf, Status status, String cep, String tell, String email) {
+    public UsuarioEntity(String idUsuario, String nome, String cpf, String status, AddressEntity endereco, String tell, String email) {
         this.idUsuario = idUsuario;
         this.nome = nome;
         this.cpf = cpf;
         this.status = status;
-        this.cep = cep;
+        this.endereco = endereco;
         this.tell = tell;
         this.email = email;
     }
@@ -46,12 +47,12 @@ public class UsuarioEntity {
         return cpf;
     }
 
-    public Status getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public String getCep() {
-        return cep;
+    public AddressEntity getEndereco() {
+        return endereco;
     }
 
     public String getTell() {
@@ -74,12 +75,12 @@ public class UsuarioEntity {
         this.cpf = cpf;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
-    public void setCep(String cep) {
-        this.cep = cep;
+    public void setEndereco(AddressEntity endereco) {
+        this.endereco = endereco;
     }
 
     public void setTell(String tell) {

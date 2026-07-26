@@ -17,26 +17,36 @@ import java.util.List;
 public class UsuarioImplRepository implements UsuarioRepository {
     private final UsuarioJPARepository usuarioJPARepository;
     private final AddressJPARepository addressJPARepository;
-    private final IAddressMapper addressMapper;
     private final IUsuarioMapper usuarioMapper;
 
-    public UsuarioImplRepository(UsuarioJPARepository usuarioJPARepository, AddressJPARepository addressJPARepository, IAddressMapper addressMapper, IUsuarioMapper usuarioMapper) {
+    public UsuarioImplRepository(UsuarioJPARepository usuarioJPARepository, AddressJPARepository addressJPARepository, IUsuarioMapper usuarioMapper) {
         this.usuarioJPARepository = usuarioJPARepository;
         this.addressJPARepository = addressJPARepository;
-        this.addressMapper = addressMapper;
         this.usuarioMapper = usuarioMapper;
     }
 
     @Override
     public Usuario createUsuario(Usuario usuario) {
-        var address = addressJPARepository.findByCep(usuario.getCep());
-        return usuarioMapper.toDomain(usuarioJPARepository.save(usuarioMapper.toEntity(usuario)));
+        var addressEntity = addressJPARepository.findByCep(usuario.getEndereco().getCep()).orElseGet(AddressEntity::new);
+        addressEntity.setCep(usuario.getEndereco().getCep());
+        addressEntity.setCodigoMunicipal(usuario.getEndereco().getCodigoMunicipal());
+        addressEntity.setBairro(usuario.getEndereco().getBairro());
+        addressEntity.setEstado(usuario.getEndereco().getEstado());
+        addressEntity.setLogradouro(usuario.getEndereco().getLogradouro());
+        addressEntity.setLocalidade(usuario.getEndereco().getLocalidade());
+        addressEntity.setComplemento(usuario.getEndereco().getComplemento());
+        addressEntity.setUf(usuario.getEndereco().getUF());
+        addressEntity = addressJPARepository.save(addressEntity);
+
+        var usuarioEntity = usuarioMapper.toEntity(usuario);
+        usuarioEntity.setEndereco(addressEntity);
+        return usuarioMapper.toDomain(usuarioJPARepository.save(usuarioEntity));
     }
 
     @Override
     public Usuario deleteUsuario(String cpf) {
-        var usuarioEntity = usuarioJPARepository.findByCpf(cpf).orElseThrow(() -> new RuntimeException("Not found Usuario!!"));
-        usuarioEntity.setStatus(Status.INATIVO);
+        var usuarioEntity = usuarioJPARepository.findByCpf(cpf).orElseThrow(() -> new RuntimeException("Not Found Usuario!!"));
+        usuarioEntity.setStatus(Status.INATIVO.name());
         return usuarioMapper.toDomain(usuarioJPARepository.save(usuarioEntity));
     }
 
@@ -49,39 +59,30 @@ public class UsuarioImplRepository implements UsuarioRepository {
 
     @Override
     public Usuario searchUsuario(String cpf) {
-        return usuarioMapper.toDomain(usuarioJPARepository.findByCpf(cpf).orElseThrow(() -> new RuntimeException("Not found Usuario!!")));
+        var usuarioEntity = usuarioJPARepository.findByCpf(cpf).orElseThrow(() -> new RuntimeException("Not Found Usuario !!"));
+        return usuarioMapper.toDomain(usuarioEntity);
     }
 
     @Override
     public Usuario updateUsuario(Usuario usuario) {
-        var usuarioEntity = usuarioJPARepository.findByCpf(usuario.getCpf()).orElseThrow(() -> new RuntimeException("Not found Usuario!!"));
+        var addressEntity = addressJPARepository.findByCep(usuario.getEndereco().getCep()).orElseGet(AddressEntity::new);
+        addressEntity.setCep(usuario.getEndereco().getCep());
+        addressEntity.setCodigoMunicipal(usuario.getEndereco().getCodigoMunicipal());
+        addressEntity.setBairro(usuario.getEndereco().getBairro());
+        addressEntity.setEstado(usuario.getEndereco().getEstado());
+        addressEntity.setLogradouro(usuario.getEndereco().getLogradouro());
+        addressEntity.setLocalidade(usuario.getEndereco().getLocalidade());
+        addressEntity.setComplemento(usuario.getEndereco().getComplemento());
+        addressEntity.setUf(usuario.getEndereco().getUF());
+        addressEntity = addressJPARepository.save(addressEntity);
+
+        var usuarioEntity = usuarioJPARepository.findByCpf(usuario.getCpf()).orElseThrow(() -> new RuntimeException("Not Found Usuario!!"));
         usuarioEntity.setCpf(usuario.getCpf());
+        usuarioEntity.setStatus(usuario.getStatus().name());
         usuarioEntity.setNome(usuario.getNome());
-        usuarioEntity.setTell(usuario.getTell());
         usuarioEntity.setEmail(usuario.getEmail());
+        usuarioEntity.setTell(usuario.getTell());
+        usuarioEntity.setEndereco(addressEntity);
         return usuarioMapper.toDomain(usuarioJPARepository.save(usuarioEntity));
-    }
-
-    @Override
-    public Address searchAddress(String cep) {
-        return addressMapper.toDomain(addressJPARepository.findByCep(cep).orElse(new AddressEntity()));
-    }
-
-    @Override
-    public Address createAddress(Address address) {
-        return addressMapper.toDomain(addressJPARepository.save(addressMapper.toEntity(address)));
-    }
-
-    @Override
-    public Address updateAddress(Address address) {
-        var addressEntity = addressJPARepository.findByCep(address.getCep()).orElseThrow(() -> new RuntimeException("Not Found Address!!"));
-        addressEntity.setBairro(address.getBairro());
-        addressEntity.setEstado(address.getEstado());
-        addressEntity.setComplemento(address.getComplemento());
-        addressEntity.setIbge(address.getIbge());
-        addressEntity.setLogradouro(address.getLogradouro());
-        addressEntity.setLocalidade(address.getLocalidade());
-        addressEntity.setUf(address.getUF());
-        return addressMapper.toDomain(addressJPARepository.save(addressEntity));
     }
 }

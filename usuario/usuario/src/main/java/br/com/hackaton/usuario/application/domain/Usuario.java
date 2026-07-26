@@ -7,7 +7,7 @@ public class Usuario {
     private final String nome;
     private final String cpf;
     private final Status status;
-    private final String cep;
+    private final Address endereco;
     private final String tell;
     private final String email;
 
@@ -16,7 +16,7 @@ public class Usuario {
         this.nome = usuarioBuilder.nome;
         this.cpf = usuarioBuilder.cpf;
         this.status = usuarioBuilder.status;
-        this.cep = usuarioBuilder.cep;
+        this.endereco = usuarioBuilder.endereco;
         this.tell = usuarioBuilder.tell;
         this.email = usuarioBuilder.email;
     }
@@ -37,8 +37,8 @@ public class Usuario {
         return status;
     }
 
-    public String getCep() {
-        return cep;
+    public Address getEndereco() {
+        return endereco;
     }
 
     public String getTell() {
@@ -54,7 +54,7 @@ public class Usuario {
         private String nome;
         private String cpf;
         private Status status;
-        private String cep;
+        private Address endereco;
         private String tell;
         private String email;
 
@@ -78,8 +78,8 @@ public class Usuario {
             return this;
         }
 
-        public UsuarioBuilder withCep (String cep) {
-            this.cep = cep;
+        public UsuarioBuilder withCep (Address endereco) {
+            this.endereco = endereco;
             return this;
         }
 

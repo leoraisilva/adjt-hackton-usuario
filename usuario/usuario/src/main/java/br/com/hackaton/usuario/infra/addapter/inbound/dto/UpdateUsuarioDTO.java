@@ -6,7 +6,7 @@ import br.com.hackaton.usuario.application.usecase.inbound.update.UpdateUsuarioI
 
 import java.util.Objects;
 
-public record UpdateUsuarioDTO (String nome, String cpf, Status status, UpdateAddressDTO addressDTO, String tell, String email) {
+public record UpdateUsuarioDTO (String nome, String cpf, Status status, UpdateAddressDTO endereco, String tell, String email) {
 
     public UpdateUsuarioDTO {
         Objects.requireNonNull(nome, "Campo nome é obrigatorio!!");
@@ -50,14 +50,14 @@ public record UpdateUsuarioDTO (String nome, String cpf, Status status, UpdateAd
                 updateDTO.cpf(),
                 updateDTO.status(),
                 new Address.AddressBuilder()
-                        .withCEP(updateDTO.addressDTO().cep())
-                        .withBairro(updateDTO.addressDTO().bairro())
-                        .withComplemento(updateDTO.addressDTO().complemento())
-                        .withEstado(updateDTO.addressDTO().estado())
-                        .withLocalidade(updateDTO.addressDTO().localidade())
-                        .withLogradouro(updateDTO.addressDTO().logradouro())
-                        .withIBGE(updateDTO.addressDTO().ibge())
-                        .withUF(updateDTO.addressDTO().uf())
+                        .withCEP(updateDTO.endereco().cep())
+                        .withBairro(updateDTO.endereco().bairro())
+                        .withComplemento(updateDTO.endereco().complemento())
+                        .withEstado(updateDTO.endereco().estado())
+                        .withLocalidade(updateDTO.endereco().localidade())
+                        .withLogradouro(updateDTO.endereco().logradouro())
+                        .withCodigoMunicipal(updateDTO.endereco().codigoMunicipal())
+                        .withUF(updateDTO.endereco().uf())
                         .build(),
                 updateDTO.tell,
                 updateDTO.email

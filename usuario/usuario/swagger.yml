@@ -1,0 +1,208 @@
+openapi: 3.0.3
+
+info:
+  title: API Usuários
+  description: API responsável pelo gerenciamento de usuários.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8080
+
+tags:
+  - name: Usuário
+    description: Operações relacionadas aos usuários
+
+paths:
+
+  /api/v1/usuario/create:
+    post:
+      tags:
+        - Usuário
+      summary: Criar usuário
+      operationId: createUsuario
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UsuarioRequest'
+      responses:
+        '200':
+          description: Usuário criado com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsuarioResponse'
+
+  /api/v1/usuario/list:
+    get:
+      tags:
+        - Usuário
+      summary: Listar usuários
+      operationId: listUsuarios
+      responses:
+        '200':
+          description: Lista de usuários.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UsuarioResponse'
+
+  /api/v1/usuario/search/{cpf}:
+    get:
+      tags:
+        - Usuário
+      summary: Buscar usuário por CPF
+      operationId: searchUsuario
+      parameters:
+        - name: cpf
+          in: path
+          required: true
+          description: CPF do usuário
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Usuário encontrado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsuarioResponse'
+
+        '404':
+          description: Usuário não encontrado.
+
+  /api/v1/usuario/update:
+    put:
+      tags:
+        - Usuário
+      summary: Atualizar usuário
+      operationId: updateUsuario
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UsuarioRequest'
+      responses:
+        '200':
+          description: Usuário atualizado com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsuarioResponse'
+
+  /api/v1/usuario/delete/{cpf}:
+    delete:
+      tags:
+        - Usuário
+      summary: Excluir usuário
+      operationId: deleteUsuario
+      parameters:
+        - name: cpf
+          in: path
+          required: true
+          description: CPF do usuário
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Usuário removido com sucesso.
+
+        '404':
+          description: Usuário não encontrado.
+
+components:
+
+  schemas:
+
+    UsuarioRequest:
+      type: object
+      required:
+        - nome
+        - cpf
+        - status
+        - endereco
+      properties:
+        nome:
+          type: string
+          example: João da Silva
+
+        cpf:
+          type: string
+          example: "12345678900"
+
+        status:
+          type: string
+          example: ATIVO
+
+        endereco:
+          $ref: '#/components/schemas/Endereco'
+
+        tell:
+          type: string
+          example: "11999999999"
+
+        email:
+          type: string
+          format: email
+          example: joao@email.com
+
+    UsuarioResponse:
+      type: object
+      properties:
+        nome:
+          type: string
+
+        cpf:
+          type: string
+
+        status:
+          type: string
+
+        endereco:
+          $ref: '#/components/schemas/Endereco'
+
+        tell:
+          type: string
+
+        email:
+          type: string
+          format: email
+
+    Endereco:
+      type: object
+      properties:
+        cep:
+          type: string
+          example: "01001000"
+
+        codigoMunicipio:
+          type: string
+          example: "3550308"
+
+        logradouro:
+          type: string
+          example: Avenida Paulista
+
+        complemento:
+          type: string
+          example: Apto 101
+
+        bairro:
+          type: string
+          example: Bela Vista
+
+        localidade:
+          type: string
+          example: São Paulo
+
+        estado:
+          type: string
+          example: São Paulo
+
+        uf:
+          type: string
+          example: SP

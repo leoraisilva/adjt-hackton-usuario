@@ -11,7 +11,4 @@ public interface UsuarioRepository {
     List<Usuario> listUsuario ();
     Usuario searchUsuario (String cpf);
     Usuario updateUsuario (Usuario usuario);
-    Address searchAddress (String cep);
-    Address createAddress (Address address);
-    Address updateAddress (Address address);
 }

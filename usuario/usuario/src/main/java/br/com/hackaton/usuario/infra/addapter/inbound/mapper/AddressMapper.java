@@ -13,8 +13,8 @@ public class AddressMapper implements IAddressMapper {
 
     public Address toDomain (AddressEntity entity) {
         return factory.novoAddress(
-                entity.getIbge(),
                 entity.getCep(),
+                entity.getCodigoMunicipal(),
                 entity.getLogradouro(),
                 entity.getComplemento(),
                 entity.getBairro(),
@@ -26,8 +26,8 @@ public class AddressMapper implements IAddressMapper {
 
     public AddressEntity toEntity (Address domain) {
         return new AddressEntity(
-                domain.getIbge(),
                 domain.getCep(),
+                domain.getCodigoMunicipal(),
                 domain.getLogradouro(),
                 domain.getComplemento(),
                 domain.getBairro(),

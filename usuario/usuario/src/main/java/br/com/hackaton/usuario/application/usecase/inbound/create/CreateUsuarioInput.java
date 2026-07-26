@@ -5,12 +5,12 @@ import br.com.hackaton.usuario.application.domain.Status;
 import br.com.hackaton.usuario.application.domain.Usuario;
 
 public record CreateUsuarioInput (String nome, String cpf, Status status, Address address, String tell, String email) {
-    public static CreateUsuarioInput from (Usuario usuario, Address address) {
+    public static CreateUsuarioInput from (Usuario usuario) {
         return new CreateUsuarioInput(
                 usuario.getNome(),
                 usuario.getCpf(),
                 usuario.getStatus(),
-                address,
+                usuario.getEndereco(),
                 usuario.getTell(),
                 usuario.getEmail()
         );
@@ -20,7 +20,7 @@ public record CreateUsuarioInput (String nome, String cpf, Status status, Addres
                 .withNome(input.nome)
                 .withCPF(input.cpf)
                 .withStatus(input.status)
-                .withCep(input.address.getCep())
+                .withCep(input.address)
                 .withTell(input.tell)
                 .withEmail(input.email)
                 .build();

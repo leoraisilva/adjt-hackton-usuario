@@ -4,7 +4,7 @@ import br.com.hackaton.usuario.application.domain.Status;
 
 import java.util.Objects;
 
-public record CreateAddressDTO(String ibge, String cep, String logradouro, String complemento, String bairro, String localidade, String estado, String uf) {
+public record CreateAddressDTO(String cep, String codigoMunicipal, String logradouro, String complemento, String bairro, String localidade, String estado, String uf) {
     public CreateAddressDTO {
         Objects.requireNonNull(cep, "Campo CEP é obrigatorio!!");
         if(!cep.matches("\\d{8}") || cep.matches("(\\d)\\1{7}")){

@@ -56,13 +56,13 @@ public class UsuarioConfig {
     }
 
     @Bean
-    UsuarioRepository usuarioRepository(UsuarioJPARepository usuarioJPARepository, AddressJPARepository addressJPARepository, IAddressMapper addressMapper, IUsuarioMapper usuarioMapper) {
-        return new UsuarioImplRepository(usuarioJPARepository, addressJPARepository, addressMapper, usuarioMapper);
+    UsuarioRepository usuarioRepository(UsuarioJPARepository usuarioJPARepository, AddressJPARepository addressJPARepository, IUsuarioMapper usuarioMapper) {
+        return new UsuarioImplRepository(usuarioJPARepository, addressJPARepository, usuarioMapper);
     }
 
     @Bean
-    IUsuarioMapper usuarioMapper (UsuarioFactory usuarioFactory) {
-        return new UsuarioMapper(usuarioFactory);
+    IUsuarioMapper usuarioMapper (UsuarioFactory usuarioFactory, AddressFactory addressFactory) {
+        return new UsuarioMapper(usuarioFactory, addressFactory);
     }
 
     @Bean
