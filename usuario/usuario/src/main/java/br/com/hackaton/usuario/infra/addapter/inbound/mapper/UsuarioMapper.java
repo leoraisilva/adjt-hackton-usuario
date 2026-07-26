@@ -42,7 +42,7 @@ public class UsuarioMapper implements IUsuarioMapper{
                 domain.getStatus().name(),
                 new AddressEntity(
                         domain.getEndereco().getCep(),
-                        domain.getEndereco().getCodigoMunicipal(),
+                        domain.getEndereco().getCodigoMunicipio(),
                         domain.getEndereco().getLogradouro(),
                         domain.getEndereco().getComplemento(),
                         domain.getEndereco().getBairro(),

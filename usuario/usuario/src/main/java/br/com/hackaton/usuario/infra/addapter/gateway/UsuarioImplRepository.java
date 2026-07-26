@@ -29,7 +29,7 @@ public class UsuarioImplRepository implements UsuarioRepository {
     public Usuario createUsuario(Usuario usuario) {
         var addressEntity = addressJPARepository.findByCep(usuario.getEndereco().getCep()).orElseGet(AddressEntity::new);
         addressEntity.setCep(usuario.getEndereco().getCep());
-        addressEntity.setCodigoMunicipal(usuario.getEndereco().getCodigoMunicipal());
+        addressEntity.setCodigoMunicipal(usuario.getEndereco().getCodigoMunicipio());
         addressEntity.setBairro(usuario.getEndereco().getBairro());
         addressEntity.setEstado(usuario.getEndereco().getEstado());
         addressEntity.setLogradouro(usuario.getEndereco().getLogradouro());
@@ -67,7 +67,7 @@ public class UsuarioImplRepository implements UsuarioRepository {
     public Usuario updateUsuario(Usuario usuario) {
         var addressEntity = addressJPARepository.findByCep(usuario.getEndereco().getCep()).orElseGet(AddressEntity::new);
         addressEntity.setCep(usuario.getEndereco().getCep());
-        addressEntity.setCodigoMunicipal(usuario.getEndereco().getCodigoMunicipal());
+        addressEntity.setCodigoMunicipal(usuario.getEndereco().getCodigoMunicipio());
         addressEntity.setBairro(usuario.getEndereco().getBairro());
         addressEntity.setEstado(usuario.getEndereco().getEstado());
         addressEntity.setLogradouro(usuario.getEndereco().getLogradouro());

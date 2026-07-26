@@ -56,7 +56,7 @@ public record UpdateUsuarioDTO (String nome, String cpf, Status status, UpdateAd
                         .withEstado(updateDTO.endereco().estado())
                         .withLocalidade(updateDTO.endereco().localidade())
                         .withLogradouro(updateDTO.endereco().logradouro())
-                        .withCodigoMunicipal(updateDTO.endereco().codigoMunicipal())
+                        .withCodigoMunicipal(updateDTO.endereco().codigoMunicipio())
                         .withUF(updateDTO.endereco().uf())
                         .build(),
                 updateDTO.tell,

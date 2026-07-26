@@ -27,7 +27,7 @@ public class AddressMapper implements IAddressMapper {
     public AddressEntity toEntity (Address domain) {
         return new AddressEntity(
                 domain.getCep(),
-                domain.getCodigoMunicipal(),
+                domain.getCodigoMunicipio(),
                 domain.getLogradouro(),
                 domain.getComplemento(),
                 domain.getBairro(),

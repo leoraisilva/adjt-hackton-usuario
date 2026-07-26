@@ -56,7 +56,7 @@ public record CreateUsuarioDTO(String nome, String cpf, Status status, CreateAdd
                         .withEstado(createDTO.endereco().estado())
                         .withLocalidade(createDTO.endereco().localidade())
                         .withLogradouro(createDTO.endereco().logradouro())
-                        .withCodigoMunicipal(createDTO.endereco().codigoMunicipal())
+                        .withCodigoMunicipal(createDTO.endereco().codigoMunicipio())
                         .withUF(createDTO.endereco().uf())
                         .build(),
                 createDTO.tell,
